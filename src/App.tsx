@@ -11,6 +11,8 @@ import lodash from "lodash";
 import FaceButton, { FaceTypes } from "./components/faceButton/FaceButton";
 import LCDDisplay from "./components/lcdDisplay/LCDDisplay";
 import Timer from "./components/timer/Timer";
+import Board from "./components/board/Board";
+import Cell from "./components/cell/Cell";
 
 import { useMinesweeperState } from "./store/Store";
 import { ActionTypes } from "./constants/Constants";
