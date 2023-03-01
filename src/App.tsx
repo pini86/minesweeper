@@ -13,12 +13,13 @@ import LCDDisplay from "./components/lcdDisplay/LCDDisplay";
 import Timer from "./components/timer/Timer";
 import Board from "./components/board/Board";
 import Cell from "./components/cell/Cell";
-
+import Window from "./components/window/Window";
+import Menu from "./components/menu/Menu";
 import { useMinesweeperState } from "./store/Store";
 import { ActionTypes } from "./constants/Constants";
 import type { GameState, Dispatch } from "./interfaces/Interfaces";
-import sharedStyles from "./Shared.module.css";
-import styles from "./Minesweeper.module.css";
+import sharedStyles from "./assets/styles/Shared.module.css";
+import styles from "./App.module.css";
 
 const MemoizedCell = memo(Cell);
 
@@ -80,12 +81,12 @@ function GameBoard({ state, dispatch }: GameBoardProps) {
   );
 }
 
-export default function Minesweeper() {
+export default function App() {
   const { state, dispatch } = useMinesweeperState();
   return (
     <Window
       title="Minesweeper"
-      renderMenuItems={() => <Menus dispatch={dispatch} />}
+      renderMenuItems={() => <Menu dispatch={dispatch} />}
     >
       <div className={sharedStyles.outset}>
         <GameStatus state={state} dispatch={dispatch} />
