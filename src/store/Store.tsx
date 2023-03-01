@@ -39,7 +39,6 @@ function gameInitialize(state: GameState = DEFAULT_STATE): GameState {
     ...state,
     board,
     bombsToFlag: bombs,
-    id: "",
     started: false,
     hasWon: false,
     gameOver: false,

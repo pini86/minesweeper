@@ -62,3 +62,10 @@ export const MenuItems = Object.freeze({
   ],
   [MenuGroups.HELP]: [HelpItems.NOPE],
 });
+
+export enum FaceTypes {
+  SMILE,
+  OHH,
+  DED,
+  KOOL,
+}

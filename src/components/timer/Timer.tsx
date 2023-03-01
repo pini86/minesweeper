@@ -5,13 +5,13 @@ import type { Dispatch } from "../../interfaces/Interfaces";
 
 const MAX_SECONDS = 999;
 
-interface TimerProps {
+interface ШTimerProps {
   started: boolean;
   gameOver: boolean;
   dispatch: Dispatch;
 }
 
-export default function Timer({ started, gameOver, dispatch }: TimerProps) {
+export default function Timer({ started, gameOver, dispatch }: ШTimerProps) {
   const [time, setTime] = useState(0);
   useEffect(
     () => {

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import sharedStyles from "./Shared.module.css";
+import sharedStyles from "../../assets/styles/Shared.module.css";
 import styles from "./LCDDisplay.module.css";
 
 function getValueClass(value: string): string | undefined {

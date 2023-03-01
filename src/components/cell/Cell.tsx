@@ -1,8 +1,13 @@
-import * as React from 'react';
-import classNames from 'classnames';
-import {CellStates, ActionTypes} from './Constants';
-import styles from './Cell.module.css';
-import type {CellType, BoardType, MouseEventType, Dispatch} from './Types';
+import * as React from "react";
+import classNames from "classnames";
+import { CellStates, ActionTypes } from "../../constants/Constants";
+import styles from "./Cell.module.css";
+import type {
+  CellType,
+  BoardType,
+  MouseEventType,
+  Dispatch,
+} from "../../interfaces/Interfaces";
 
 function getStateClass(cell: CellType): string | undefined {
   switch (cell.state) {
@@ -81,9 +86,11 @@ interface MouseState {
   secondary: boolean;
 }
 
-type MouseStateSetter = (arg: ((arg: MouseState) => MouseState) | MouseState) => void;
+type MouseStateSetter = (
+  arg: ((arg: MouseState) => MouseState) | MouseState
+) => void;
 
-const DEFAULT_MOUSE_STATE: MouseState = {primary: false, secondary: false};
+const DEFAULT_MOUSE_STATE: MouseState = { primary: false, secondary: false };
 
 function isMouseDown(mouseState: MouseState) {
   return mouseState.primary || mouseState.secondary;
@@ -93,29 +100,40 @@ function preventDefault(event: React.MouseEvent<HTMLElement>) {
   event.preventDefault();
 }
 
-function handleMouseDown({button}: MouseEventType, setMouseState: MouseStateSetter, dispatch: Dispatch) {
+function handleMouseDown(
+  { button }: MouseEventType,
+  setMouseState: MouseStateSetter,
+  dispatch: Dispatch
+) {
   setMouseState((state) => {
     switch (button) {
       case 0: // primary
-        dispatch({type: ActionTypes.MOUSE_DOWN});
-        return {...state, primary: true};
+        dispatch({ type: ActionTypes.MOUSE_DOWN });
+        return { ...state, primary: true };
       case 2: // secondary
-        return {...state, secondary: true};
+        return { ...state, secondary: true };
       default:
         return state;
     }
   });
 }
 
-function handleMouseUp(event: MouseEventType, setMouseState: MouseStateSetter, cell: CellType, dispatch: Dispatch) {
+function handleMouseUp(
+  event: MouseEventType,
+  setMouseState: MouseStateSetter,
+  cell: CellType,
+  dispatch: Dispatch
+) {
   event.preventDefault();
-  const {row, col} = cell;
+  const { row, col } = cell;
   switch (event.button) {
     case 0: // primary
-      cell.state === CellStates.HIDDEN && dispatch({type: ActionTypes.REVEAL_CELL, col, row});
+      cell.state === CellStates.HIDDEN &&
+        dispatch({ type: ActionTypes.REVEAL_CELL, col, row });
       break;
     case 2: // secondary
-      isFlaggable(cell) && dispatch({type: ActionTypes.TOGGLE_FLAG_CELL, col, row});
+      isFlaggable(cell) &&
+        dispatch({ type: ActionTypes.TOGGLE_FLAG_CELL, col, row });
       break;
     default:
       break;
@@ -123,14 +141,15 @@ function handleMouseUp(event: MouseEventType, setMouseState: MouseStateSetter, c
   setMouseState(() => DEFAULT_MOUSE_STATE);
 }
 
-interface CellProps {
+interface ICellProps {
   cell: CellType;
   board: BoardType;
   dispatch: Dispatch;
 }
 
-export default function Cell({cell, board, dispatch}: CellProps) {
-  const [mouseState, setMouseState] = React.useState<MouseState>(DEFAULT_MOUSE_STATE);
+export default function Cell({ cell, board, dispatch }: ICellProps) {
+  const [mouseState, setMouseState] =
+    React.useState<MouseState>(DEFAULT_MOUSE_STATE);
   return (
     <div
       className={classNames(styles.container, getStateClass(cell), {
@@ -138,18 +157,29 @@ export default function Cell({cell, board, dispatch}: CellProps) {
       })}
       onContextMenu={preventDefault}
       onClick={preventDefault}
-      onMouseDown={isClickable(cell) ? (event) => handleMouseDown(event, setMouseState, dispatch) : undefined}
+      onMouseDown={
+        isClickable(cell)
+          ? (event) => handleMouseDown(event, setMouseState, dispatch)
+          : undefined
+      }
       onMouseLeave={
         isMouseDown(mouseState)
           ? () => {
-              dispatch({type: ActionTypes.MOUSE_UP});
+              dispatch({ type: ActionTypes.MOUSE_UP });
               setMouseState(() => DEFAULT_MOUSE_STATE);
             }
           : undefined
       }
-      onMouseUp={isMouseDown(mouseState) ? (event) => handleMouseUp(event, setMouseState, cell, dispatch) : undefined}>
+      onMouseUp={
+        isMouseDown(mouseState)
+          ? (event) => handleMouseUp(event, setMouseState, cell, dispatch)
+          : undefined
+      }
+    >
       {showTouchingNumber(cell) ? (
-        <span className={classNames(styles.touching, getTouchingClass(cell))}>{cell.touching}</span>
+        <span className={classNames(styles.touching, getTouchingClass(cell))}>
+          {cell.touching}
+        </span>
       ) : null}
     </div>
   );

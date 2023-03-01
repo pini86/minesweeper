@@ -12,7 +12,6 @@ export interface CellType {
 export type BoardType = CellType[][];
 
 export interface GameState {
-  id: string;
   board: BoardType;
   gameOver: boolean;
   hasWon: boolean;
