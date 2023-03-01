@@ -9,6 +9,8 @@ import { memo } from "react";
 import classNames from "classnames";
 import lodash from "lodash";
 import FaceButton, { FaceTypes } from "./components/faceButton/FaceButton";
+import LCDDisplay from "./components/lcdDisplay/LCDDisplay";
+import Timer from "./components/timer/Timer";
 
 import { useMinesweeperState } from "./store/Store";
 import { ActionTypes } from "./constants/Constants";
