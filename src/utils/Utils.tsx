@@ -146,3 +146,14 @@ export function getCellFromCords(
 ): CellType | undefined {
   return board[row][col];
 }
+
+export function isClickableAndFlagable(cell: CellType): boolean {
+  switch (cell.state) {
+    case CellStates.HIDDEN:
+    case CellStates.FLAGGED:
+    case CellStates.FLAGGED_MAYBE:
+      return true;
+    default:
+      return false;
+  }
+}

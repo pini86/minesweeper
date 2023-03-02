@@ -1,14 +1,14 @@
-import type { GameState } from "../interfaces/Interfaces";
+import type { GameState, MouseState } from "../interfaces/Interfaces";
 
 export enum CellStates {
-  HIDDEN,
-  FLAGGED,
-  FLAGGED_MAYBE,
-  BOMB_SELECTED,
-  BOMB_FOUND,
-  BOMB_REVEALED,
-  FLAGGED_MAYBE_REVEALED,
-  REVEALED,
+  HIDDEN = "hidden",
+  FLAGGED = "flagged",
+  FLAGGED_MAYBE = "flaggedMaybe",
+  BOMB_SELECTED = "bombSelected",
+  BOMB_FOUND = "bombFound",
+  BOMB_REVEALED = "bombRevealed",
+  FLAGGED_MAYBE_REVEALED = "bombSelected",
+  REVEALED = "revealed",
 }
 
 export const CELL_SIZE = 16;
@@ -43,3 +43,8 @@ export enum FaceTypes {
   DEAD = "dead",
   COOL = "cool",
 }
+
+export const DEFAULT_MOUSE_STATE: MouseState = {
+  primary: false,
+  secondary: false,
+};

@@ -63,3 +63,8 @@ export type Actions =
   | ActionMouseUp;
 
 export type Dispatch = (action: Actions) => void;
+
+export interface MouseState {
+  primary: boolean;
+  secondary: boolean;
+}
