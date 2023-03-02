@@ -35,37 +35,9 @@ export enum ActionTypes {
   MOUSE_UP = "MOUSE_UP",
 }
 
-export enum MenuGroups {
-  GAME = "GAME",
-  HELP = "HELP",
-}
-
-export enum GameItems {
-  NEW = "NEW",
-  BEGINNER = "BEGINNER",
-  INTERMEDIATE = "INTERMEDIATE",
-  EXPERT = "EXPERT",
-  CUSTOM = "CUSTOM",
-}
-
-export enum HelpItems {
-  NOPE = "NOPE",
-}
-
-export const MenuItems = Object.freeze({
-  [MenuGroups.GAME]: [
-    GameItems.NEW,
-    GameItems.BEGINNER,
-    GameItems.INTERMEDIATE,
-    GameItems.EXPERT,
-    GameItems.CUSTOM,
-  ],
-  [MenuGroups.HELP]: [HelpItems.NOPE],
-});
-
 export enum FaceTypes {
-  SMILE,
-  OHH,
-  DED,
-  KOOL,
+  SMILE = "smile",
+  OHH = "ohh",
+  DEAD = "dead",
+  COOL = "cool",
 }

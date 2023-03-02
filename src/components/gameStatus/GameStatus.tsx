@@ -17,9 +17,9 @@ export default function GameStatus({ state, dispatch }: IGameStatusProps) {
   let type = FaceTypes.SMILE;
   if (gameOver) {
     if (hasWon) {
-      type = FaceTypes.KOOL;
+      type = FaceTypes.COOL;
     } else {
-      type = FaceTypes.DED;
+      type = FaceTypes.DEAD;
     }
   } else if (mouseDown) {
     type = FaceTypes.OHH;
