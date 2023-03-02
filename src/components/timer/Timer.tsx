@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import LCDDisplay from "../lcdDisplay/LCDDisplay";
-import { ActionTypes } from "../../constants/Constants";
+import { ActionTypes, MAX_SECONDS } from "../../constants/Constants";
 import type { Dispatch } from "../../interfaces/Interfaces";
-
-const MAX_SECONDS = 999;
 
 interface ШTimerProps {
   started: boolean;
