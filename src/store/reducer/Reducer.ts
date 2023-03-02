@@ -1,4 +1,3 @@
-import { useReducer } from "react";
 import lodash from "lodash";
 import {
   getEmptyGrid,
@@ -9,16 +8,15 @@ import {
   checkHasWon,
   setWinningBoard,
   getCellFromCords,
-} from "../utils/Utils";
-import { CellStates, DEFAULT_STATE, ActionTypes } from "../constants/Constants";
-import type {
-  GameState,
-  Actions,
-  Dispatch,
-  CellType,
-} from "../interfaces/Interfaces";
+} from "../../utils/Utils";
+import {
+  CellStates,
+  DEFAULT_STATE,
+  ActionTypes,
+} from "../../constants/Constants";
+import type { GameState, Actions, CellType } from "../../interfaces/Interfaces";
 
-function gameInitialize(state: GameState = DEFAULT_STATE): GameState {
+export function InitAppState(state: GameState = DEFAULT_STATE): GameState {
   const { rows, columns, bombs } = state;
   let board = getEmptyGrid(rows, columns);
   lodash(board)
@@ -45,10 +43,10 @@ function gameInitialize(state: GameState = DEFAULT_STATE): GameState {
   };
 }
 
-function reducer(state: GameState, action: Actions): GameState {
+export function reducer(state: GameState, action: Actions): GameState {
   switch (action.type) {
     case ActionTypes.RESET_GAME:
-      return gameInitialize(action.state || state);
+      return InitAppState(action.state || state);
     case ActionTypes.REVEAL_CELL: {
       let { board, gameOver, bombsToFlag } = state;
       const cell = getCellFromCords(action.row, action.col, board);
@@ -110,22 +108,4 @@ function reducer(state: GameState, action: Actions): GameState {
     default:
       return state;
   }
-}
-
-type ReducerType = (state: GameState, action: Actions) => GameState;
-
-interface MinesweeperState {
-  state: GameState;
-  dispatch: Dispatch;
-}
-
-export function useMinesweeperState(
-  initialState: GameState = DEFAULT_STATE
-): MinesweeperState {
-  const [state, dispatch] = useReducer<ReducerType, GameState>(
-    reducer,
-    initialState,
-    gameInitialize
-  );
-  return { state, dispatch };
 }

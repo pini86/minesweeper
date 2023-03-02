@@ -16,7 +16,6 @@ export const CELL_SIZE = 16;
 export const MAX_SECONDS = 999;
 
 export const DEFAULT_STATE: GameState = Object.freeze({
-  id: "",
   board: [],
   gameOver: false,
   hasWon: false,
