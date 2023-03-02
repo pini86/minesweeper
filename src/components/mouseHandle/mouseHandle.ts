@@ -43,6 +43,7 @@ export function handleMouseUp(
   const { row, col } = cell;
   switch (event.button) {
     case 0:
+      dispatch({ type: ActionTypes.MOUSE_UP });
       cell.state === CellStates.HIDDEN &&
         dispatch({ type: ActionTypes.REVEAL_CELL, col, row });
       break;
