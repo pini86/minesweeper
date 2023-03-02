@@ -3,13 +3,13 @@ import LCDDisplay from "../lcdDisplay/LCDDisplay";
 import { ActionTypes, MAX_SECONDS } from "../../constants/Constants";
 import type { Dispatch } from "../../interfaces/Interfaces";
 
-interface ШTimerProps {
+interface ITimerProps {
   started: boolean;
   gameOver: boolean;
   dispatch: Dispatch;
 }
 
-export default function Timer({ started, gameOver, dispatch }: ШTimerProps) {
+export default function Timer({ started, gameOver, dispatch }: ITimerProps) {
   const [time, setTime] = useState(0);
   useEffect(
     () => {
@@ -22,6 +22,8 @@ export default function Timer({ started, gameOver, dispatch }: ШTimerProps) {
             setTime((t) => Math.min(t + 1, MAX_SECONDS));
           }
         }, 1000);
+      } else if (!started) {
+        setTime(0);
       }
       return () => clearTimeout(timeoutID);
     },
