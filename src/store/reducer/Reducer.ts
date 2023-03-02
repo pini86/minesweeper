@@ -84,9 +84,9 @@ export function reducer(state: GameState, action: Actions): GameState {
       }
       let _cell;
       if (cell.state === CellStates.HIDDEN) {
-        _cell = { ...cell, state: CellStates.FLAGGED };
-      } else if (cell.state === CellStates.FLAGGED) {
         _cell = { ...cell, state: CellStates.FLAGGED_MAYBE };
+      } else if (cell.state === CellStates.FLAGGED_MAYBE) {
+        _cell = { ...cell, state: CellStates.FLAGGED };
       } else {
         _cell = { ...cell, state: CellStates.HIDDEN };
       }
