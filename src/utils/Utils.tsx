@@ -116,6 +116,8 @@ export function setLosingBoard(
     if (cell.bomb) {
       if (cell === losingCell) {
         return { ...cell, state: CellStates.BOMB_SELECTED };
+      } else if (cell.state === CellStates.FLAGGED) {
+        return { ...cell, state: CellStates.BOMB_FOUND };
       }
       return { ...cell, state: CellStates.BOMB_REVEALED };
     }
