@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   background: url("../../assets//images//tile-bg.png");
   image-rendering: pixelated;
 }

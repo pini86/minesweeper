@@ -55,14 +55,12 @@ export function reducer(state: GameState, action: Actions): GameState {
       if (cell.bomb) {
         board = setLosingBoard(cell, board);
         gameOver = true;
-        bombsToFlag = 0;
       } else {
         board = revealClickedCell(cell, board);
         hasWon = checkHasWon(board);
         if (hasWon) {
           gameOver = true;
           board = setWinningBoard(board);
-          bombsToFlag = 0;
         }
       }
       return {
@@ -84,9 +82,9 @@ export function reducer(state: GameState, action: Actions): GameState {
       }
       let _cell;
       if (cell.state === CellStates.HIDDEN) {
-        _cell = { ...cell, state: CellStates.FLAGGED_MAYBE };
-      } else if (cell.state === CellStates.FLAGGED_MAYBE) {
         _cell = { ...cell, state: CellStates.FLAGGED };
+      } else if (cell.state === CellStates.FLAGGED) {
+        _cell = { ...cell, state: CellStates.FLAGGED_MAYBE };
       } else {
         _cell = { ...cell, state: CellStates.HIDDEN };
       }

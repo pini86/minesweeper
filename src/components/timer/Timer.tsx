@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LCDDisplay from "../lcdDisplay/LCDDisplay";
+import Counter from "../counter/Counter";
 import { ActionTypes, MAX_SECONDS } from "../../constants/Constants";
 import type { Dispatch } from "../../interfaces/Interfaces";
 
@@ -30,5 +30,5 @@ export default function Timer({ started, gameOver, dispatch }: ITimerProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [time, started, gameOver]
   );
-  return <LCDDisplay value={time} digits={3} />;
+  return <Counter value={time} digits={3} />;
 }

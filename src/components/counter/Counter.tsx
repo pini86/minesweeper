@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import sharedStyles from "../../assets/styles/Shared.module.css";
-import styles from "./LCDDisplay.module.css";
+import styles from "./Counter.module.css";
 
-interface LCDDisplayProps {
+interface ICounterProps {
   value: number;
   digits?: number | undefined;
 }
 
-export default function LCDDisplay({ value, digits = 3 }: LCDDisplayProps) {
+export default function Counter({ value, digits = 3 }: ICounterProps) {
   return (
     <div className={classNames(styles.container, sharedStyles.inset)}>
       {String(value)
