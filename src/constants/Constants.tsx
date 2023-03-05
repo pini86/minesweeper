@@ -47,3 +47,14 @@ export const DEFAULT_MOUSE_STATE: MouseState = {
   primary: false,
   secondary: false,
 };
+
+export const SURROUNDING_CELLS = [
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+];

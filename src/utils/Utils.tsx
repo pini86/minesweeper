@@ -1,17 +1,10 @@
 import type { CellType, BoardType } from "../interfaces/Interfaces";
 import lodash from "lodash";
-import { CellStates } from "../constants/Constants";
-
-const SURROUNDING_CELLS = [
-  [-1, -1],
-  [-1, 0],
-  [-1, 1],
-  [0, -1],
-  [0, 1],
-  [1, -1],
-  [1, 0],
-  [1, 1],
-];
+import {
+  CellStates,
+  DEFAULT_STATE,
+  SURROUNDING_CELLS,
+} from "../constants/Constants";
 
 function mapEachCell(
   board: BoardType,
@@ -21,7 +14,7 @@ function mapEachCell(
 }
 
 function getSurroundingBombs(
-  { row, col, bomb, state }: CellType,
+  { row, col, bomb }: CellType,
   board: BoardType
 ): number {
   if (bomb) {
@@ -51,7 +44,7 @@ function generateEmptyCell(row: number, col: number): CellType {
   };
 }
 
-export function getEmptyGrid(rows: number, columns: number): BoardType {
+function getEmptyGrid(rows: number, columns: number): BoardType {
   return new Array(rows).fill([]).map((_: [], row: number) => {
     return new Array(columns)
       .fill(null)
@@ -59,7 +52,7 @@ export function getEmptyGrid(rows: number, columns: number): BoardType {
   });
 }
 
-export function precomputeSurroundingBombs(board: BoardType): BoardType {
+function precomputeSurroundingBombs(board: BoardType): BoardType {
   return mapEachCell(board, (cell) => ({
     ...cell,
     touching: getSurroundingBombs(cell, board),
@@ -158,4 +151,24 @@ export function isClickableAndFlagable(cell: CellType): boolean {
     default:
       return false;
   }
+}
+
+export function generateBombsToBoard(): BoardType {
+  const { rows, columns, bombs } = DEFAULT_STATE;
+  let board = getEmptyGrid(rows, columns);
+  lodash(board)
+    .flatten()
+    .filter(
+      ({ col, row }: CellType) =>
+        !(
+          (col === 0 && row === 0) ||
+          (col === 0 && row === rows - 1) ||
+          (col === columns - 1 && row === rows - 1) ||
+          (col === columns - 1 && row === 0)
+        )
+    )
+    .sampleSize(bombs)
+    .forEach((cell) => (cell.bomb = true));
+  board = precomputeSurroundingBombs(board);
+  return board;
 }

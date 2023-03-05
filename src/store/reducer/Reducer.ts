@@ -1,13 +1,11 @@
-import lodash from "lodash";
 import {
-  getEmptyGrid,
-  precomputeSurroundingBombs,
   countFlags,
   setLosingBoard,
   revealClickedCell,
   checkHasWon,
   setWinningBoard,
   getCellFromCords,
+  generateBombsToBoard,
 } from "../../utils/Utils";
 import {
   CellStates,
@@ -17,22 +15,8 @@ import {
 import type { GameState, Actions, CellType } from "../../interfaces/Interfaces";
 
 export function InitAppState(state: GameState = DEFAULT_STATE): GameState {
-  const { rows, columns, bombs } = state;
-  let board = getEmptyGrid(rows, columns);
-  lodash(board)
-    .flatten()
-    .filter(
-      ({ col, row }: CellType) =>
-        !(
-          (col === 0 && row === 0) ||
-          (col === 0 && row === rows - 1) ||
-          (col === columns - 1 && row === rows - 1) ||
-          (col === columns - 1 && row === 0)
-        )
-    )
-    .sampleSize(bombs)
-    .forEach((cell) => (cell.bomb = true));
-  board = precomputeSurroundingBombs(board);
+  const { bombs } = state;
+  const board = generateBombsToBoard();
   return {
     ...state,
     board,
@@ -49,18 +33,24 @@ export function reducer(state: GameState, action: Actions): GameState {
       return InitAppState(action.state || state);
     case ActionTypes.REVEAL_CELL: {
       let { board, gameOver, started, bombs, bombsToFlag } = state;
-      const cell = getCellFromCords(action.row, action.col, board);
+      let cell = getCellFromCords(action.row, action.col, board);
+
+      //the first click on the bomb call re-generate board
+      if (!started && cell?.bomb) {
+        let cellNew: CellType | undefined = undefined;
+        do {
+          board = generateBombsToBoard();
+          cellNew = getCellFromCords(action.row, action.col, board);
+        } while (cellNew!.bomb);
+        cell = cellNew;
+      }
+
       if (cell == null) return state;
       let hasWon = false;
       let bombsFlagged = bombs - bombsToFlag;
-      console.log("reveal cell", bombsToFlag);
       if (cell.bomb) {
-        if (started) {
-          board = setLosingBoard(cell, board);
-          gameOver = true;
-        } else {
-          // дописать поиск свободной ячейки и обмен на бомбу . Только для первого хода!!!
-        }
+        board = setLosingBoard(cell, board);
+        gameOver = true;
       } else {
         board = revealClickedCell(cell, board);
         bombsFlagged = countFlags(board);
