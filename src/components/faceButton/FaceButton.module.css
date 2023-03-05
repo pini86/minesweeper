@@ -1,0 +1,27 @@
+.container {
+  width: 26px;
+  height: 26px;
+  background: url('../../assets/images/tile-faces.png');
+  image-rendering: pixelated;
+  cursor: pointer;
+}
+
+.smile {
+  background-position: 0 0;
+}
+
+.ohh {
+  background-position: -52px 0;
+}
+
+.dead {
+  background-position: -78px 0;
+}
+
+.cool {
+  background-position: -104px 0;
+}
+
+.container:active {
+  background-position: -26px 0;
+}

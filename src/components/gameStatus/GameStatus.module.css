@@ -1,0 +1,9 @@
+.gameStatus {
+  padding: 4px 5px;
+  border-width: 2px;
+  margin-bottom: 6px;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
