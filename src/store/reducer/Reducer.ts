@@ -48,15 +48,22 @@ export function reducer(state: GameState, action: Actions): GameState {
     case ActionTypes.RESET_GAME:
       return InitAppState(action.state || state);
     case ActionTypes.REVEAL_CELL: {
-      let { board, gameOver, bombsToFlag } = state;
+      let { board, gameOver, started, bombs, bombsToFlag } = state;
       const cell = getCellFromCords(action.row, action.col, board);
       if (cell == null) return state;
       let hasWon = false;
+      let bombsFlagged = bombs - bombsToFlag;
+      console.log("reveal cell", bombsToFlag);
       if (cell.bomb) {
-        board = setLosingBoard(cell, board);
-        gameOver = true;
+        if (started) {
+          board = setLosingBoard(cell, board);
+          gameOver = true;
+        } else {
+          // дописать поиск свободной ячейки и обмен на бомбу . Только для первого хода!!!
+        }
       } else {
         board = revealClickedCell(cell, board);
+        bombsFlagged = countFlags(board);
         hasWon = checkHasWon(board);
         if (hasWon) {
           gameOver = true;
@@ -68,20 +75,24 @@ export function reducer(state: GameState, action: Actions): GameState {
         board,
         hasWon,
         gameOver,
-        bombsToFlag,
         started: true,
         mouseDown: false,
+        bombsToFlag: bombs - bombsFlagged,
       };
     }
     case ActionTypes.TOGGLE_FLAG_CELL: {
       const { board, bombs, started } = state;
+      let bombsFlagged = countFlags(board);
       const cell = getCellFromCords(action.row, action.col, board);
       if (cell == null) return state;
       if (!started) {
         return state;
       }
       let _cell;
-      if (cell.state === CellStates.HIDDEN) {
+      if (
+        cell.state === CellStates.HIDDEN &&
+        bombsFlagged <= DEFAULT_STATE.bombs - 1
+      ) {
         _cell = { ...cell, state: CellStates.FLAGGED };
       } else if (cell.state === CellStates.FLAGGED) {
         _cell = { ...cell, state: CellStates.FLAGGED_MAYBE };
@@ -89,7 +100,7 @@ export function reducer(state: GameState, action: Actions): GameState {
         _cell = { ...cell, state: CellStates.HIDDEN };
       }
       board[_cell.row][_cell.col] = _cell;
-      const bombsFlagged = countFlags(board);
+      bombsFlagged = countFlags(board);
       return { ...state, board, bombsToFlag: bombs - bombsFlagged };
     }
     case ActionTypes.SET_GAME_OVER: {
